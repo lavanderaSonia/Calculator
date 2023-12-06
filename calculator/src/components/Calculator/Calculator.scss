@@ -1,0 +1,31 @@
+.calculator {
+  background: linear-gradient(222deg, rgb(66, 73, 124) 35%, rgb(26, 30, 90) 84%);
+  border: 1px solid;
+  border-radius: 10px;
+  width: 30%;
+  box-shadow: 100px;
+
+  &__display {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 10px;
+    font-size: 40px;
+    color: white;
+
+    &--history {
+      font-size: 20px;
+    }
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    gap: 10px;
+    padding: 10px;
+    justify-items: center;
+  }
+}
