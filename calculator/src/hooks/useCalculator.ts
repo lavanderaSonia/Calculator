@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { KeyPressed, Operator, SpecialOperations } from "@/types";
-import { checkSyntax, isNumber, isOperator, mapStringToOperation } from "./utils";
+import { checkAndFixSyntax, isOperator, mapStringToOperation } from "./utils";
 
 /**
  * Hook that manage calculator logic
@@ -14,6 +14,10 @@ export const useCalculator = () => {
 
   const REGEX_NEGATIVE_NUMBERS_AND_OPERATORS = /([-+]?\d+\.\d*|[-+]?\d+)([-+*/])([-+]?\d+\.\d*|[-+]?\d+)?/
 
+  /**
+   * Function that update data to show in the display
+   * @param solution arithmetic operation solution
+   */
   const updateDisplay = (solution: number) => {
     setSolution(solution);
     keysPressed.current = `${solution}`;
@@ -25,14 +29,16 @@ export const useCalculator = () => {
    * @param keyPressed key pressed by user
    */
   const calculate = (keyPressed: KeyPressed) => {
-    if (keyPressed === 'C') {
-      resolveSpecialOperations(keyPressed);
-    } else {
-      keysPressed.current = checkSyntax(keyPressed, keysPressed.current, solution);
+    const specialOperations = resolveSpecialOperations(keyPressed);
+    if(specialOperations) {
+      updateDisplay(specialOperations);
+    }
+    else {
+      keysPressed.current = checkAndFixSyntax(keyPressed, keysPressed.current, solution);
       const operationConverted = mapStringToOperation(keysPressed.current.split(REGEX_NEGATIVE_NUMBERS_AND_OPERATORS).filter(Boolean));
       setOperation(operationConverted);
       if (operation.length === 3 && isOperator(`${keyPressed}`)) {
-        resolveOperation();
+        updateDisplay(resolveOperation());
       }
       if(operation.length === 1) {
         setSolution(0)
@@ -41,15 +47,22 @@ export const useCalculator = () => {
   }
 
   /**
+   * Function that execute operation and show result in the display
+   */
+  const resolute = () => {
+    const solution = resolveOperation();
+    updateDisplay(solution);
+  }
+
+  /**
    * Function that resolve special operations like 'C' key
    * @param keyPressed key pressed by user
    */
-  const resolveSpecialOperations = (keyPressed: SpecialOperations) => {
+  const resolveSpecialOperations = (keyPressed: KeyPressed): (number | null) => {
     const specialOperations: Record<SpecialOperations, number> = {
       'C': 0
     }
-    const solution = specialOperations[keyPressed];
-    updateDisplay(solution);
+    return specialOperations[keyPressed as keyof typeof specialOperations] ?? null;
   }
 
   /**
@@ -63,11 +76,10 @@ export const useCalculator = () => {
       '*': operando1 * operando2,
       '/': operando1 / operando2
     }
-    const solution = operations[operator];
-    updateDisplay(solution);
+    return operations[operator];
   }
 
-  return { operation, solution, calculate, resolveOperation }
+  return { operation, solution, calculate, resolute }
 
 }
 

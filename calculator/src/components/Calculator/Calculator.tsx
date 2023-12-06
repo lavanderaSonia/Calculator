@@ -6,7 +6,7 @@ import './Calculator.scss';
 
 export const Calculator = () => {
 
-  const {operation, solution, calculate, resolveOperation} = useCalculator();
+  const {operation, solution, calculate, resolute} = useCalculator();
 
   const handleClick = (keyPressed: KeyPressed) => {
     calculate(keyPressed);
@@ -32,7 +32,7 @@ export const Calculator = () => {
         <Button label="4" onClick={() => handleClick(4)}/>
         <Button label="5" onClick={() => handleClick(5)}/>
         <Button label="6" onClick={() => handleClick(6)}/>
-        <Button className="button--operator" label="=" onClick={() => resolveOperation()}/>
+        <Button className="button--operator" label="=" onClick={() => resolute()}/>
         <Button label="1" onClick={() => handleClick(1)}/>
         <Button label="2" onClick={() => handleClick(2)}/>
         <Button label="3" onClick={() => handleClick(3)}/>
