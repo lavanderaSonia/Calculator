@@ -1,19 +1,16 @@
+import { KeyPressed } from "@/types";
 import useCalculator from "@/hooks/useCalculator";
 import Button from "../Button";
 import './Calculator.scss';
 
-type Operator = '+' | '-' | '*' | '/';
-type SpecialCharacter = '.';
-type SpecialOperation = 'C';
 
 export const Calculator = () => {
 
   const {operation, solution, calculate, resolveOperation} = useCalculator();
 
-  const handleClick = (keyPressed: number | Operator | SpecialCharacter | SpecialOperation) => {
+  const handleClick = (keyPressed: KeyPressed) => {
     calculate(keyPressed);
   }
-
 
   return (
     <div className="calculator">
