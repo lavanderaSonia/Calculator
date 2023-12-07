@@ -14,8 +14,8 @@ export const Calculator = () => {
 
   return (
     <div className="calculator">
-      <div className="calculator__display">
-        <div className="calculator__display--history">
+      <div className="calculator__display" data-testid='calculator-display'>
+        <div className="calculator__display--history" data-testid='calculator-history'>
           {operation}
         </div>
         {solution}
