@@ -2,7 +2,7 @@
 ## Getting Started
 Before starting any development work you will need a local copy of the Calculator repository.
 ```
-git clone -b [https://github.com/lavanderaSonia/Task-App.git](https://github.com/lavanderaSonia/Calculator.git)
+git clone -b https://github.com/lavanderaSonia/Calculator.git
 
 ```
 ### Installing
