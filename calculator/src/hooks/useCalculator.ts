@@ -7,7 +7,7 @@ import { checkAndFixSyntax, isOperator, mapStringToOperation } from "./utils";
  * @returns the operation´s solution, the operation and the methods to save pressed keys and solve the operations
  */
 export const useCalculator = () => {
-  // Neccessary to manage float numbers and numbers coposed by several digits
+  // Neccessary to manage float numbers and numbers composed by several digits
   const keysPressed = useRef<string>('');
   const [operation, setOperation] = useState<(number | Operator)[]>([]);
   const [solution, setSolution] = useState<number>(0);
@@ -18,7 +18,7 @@ export const useCalculator = () => {
    * Function that update data to show in the display
    * @param solution arithmetic operation solution
    */
-  const updateDisplay = (solution: number) => {
+  const updateDisplay = (solution: number): void => {
     setSolution(solution);
     keysPressed.current = `${solution}`;
     setOperation([solution]);
@@ -28,9 +28,9 @@ export const useCalculator = () => {
    * Manage keys typed by user 
    * @param keyPressed key pressed by user
    */
-  const calculate = (keyPressed: KeyPressed) => {
+  const calculate = (keyPressed: KeyPressed): void => {
     const specialOperations = resolveSpecialOperations(keyPressed);
-    if(specialOperations) {
+    if(specialOperations !== null) {
       updateDisplay(specialOperations);
     }
     else {
@@ -49,7 +49,7 @@ export const useCalculator = () => {
   /**
    * Function that execute operation and show result in the display
    */
-  const resolute = () => {
+  const resolute = (): void => {
     const solution = resolveOperation();
     updateDisplay(solution);
   }
@@ -68,7 +68,7 @@ export const useCalculator = () => {
   /**
    * Function that resolve arithmetic operations
    */
-  const resolveOperation = () => {
+  const resolveOperation = (): number => {
     const [operando1, operator, operando2] = operation as [number, Operator, number];
     const operations: Record<Operator, number> = {
       '+': operando1 + operando2,
